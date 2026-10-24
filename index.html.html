@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Birthday Surprise 💗</title>
+<style>
+:root{--pink:#ffdbea;--rose:#df5b91;--ink:#74445b}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Trebuchet MS",sans-serif;color:var(--ink);background:radial-gradient(circle at top left,#fff,transparent 38%),linear-gradient(135deg,#ffeaf3,#f1e2ff,#fff2f7);overflow-x:hidden}.app{min-height:100vh;display:grid;place-items:center;padding:20px;position:relative;z-index:1}.screen{display:none;width:min(100%,650px);text-align:center;animation:in .45s ease}.screen.active{display:block}@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.card{background:#ffffffc9;border:2px solid white;border-radius:28px;padding:clamp(22px,5vw,42px);box-shadow:0 18px 55px #b65b8826}h1{font-size:clamp(2rem,7vw,3.4rem);line-height:1.1;color:var(--rose);margin:12px 0}h2{color:var(--rose);font-size:clamp(1.5rem,5vw,2.2rem)}p{line-height:1.65}.emoji{font-size:clamp(4rem,17vw,7rem)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.75rem;font-weight:bold;color:#a86b8b}.btn{border:0;border-radius:99px;padding:13px 22px;margin:7px 4px;color:white;font-weight:bold;background:linear-gradient(135deg,#f58db6,#d94f83);box-shadow:0 6px 0 #c74778;cursor:pointer}.btn.secondary{color:#a14c76;background:#ffe4f0;box-shadow:0 5px 0 #f2c1d7}.btn:disabled{opacity:.4;cursor:not-allowed}.keypad{width:min(100%,300px);margin:16px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.key{padding:13px;border:1px solid #f6c7da;border-radius:14px;background:#fff5fa;color:#a14c76;font-size:1.1rem;font-weight:bold;cursor:pointer}.dots{display:flex;justify-content:center;gap:12px;margin:18px}.dot{width:13px;height:13px;border:2px solid #e78eb4;border-radius:50%}.dot.on{background:#e56c9f}.error{color:#c53669;min-height:24px}.balloons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}.balloon{border:0;background:none;cursor:pointer;color:var(--ink)}.balloon span:first-child{display:block;font-size:clamp(2.8rem,10vw,4.5rem);filter:drop-shadow(0 7px 4px #efbfd4);transition:.25s}.balloon.popped span:first-child{transform:scale(0);opacity:0}.msg{display:block;min-height:55px;font-size:.85rem}.flowers{font-size:clamp(3.5rem,15vw,6rem)}.envelope{font-size:4rem;background:#f5a8c8;border:2px solid white;border-radius:12px;padding:30px 75px;cursor:pointer;box-shadow:0 12px 25px #e8bfd2}.letter{display:none;text-align:left;white-space:pre-line;background:#fffdf4;border:1px solid #f0d8bd;padding:24px;border-radius:5px;max-width:480px;margin:20px auto;font:1rem/1.7 Georgia,serif}.letter.show{display:block;animation:in .4s}.gift{font-size:6rem;background:none;border:0;cursor:pointer;animation:bob 1.8s infinite}.qr{display:none;width:170px;height:170px;object-fit:contain;background:white;padding:8px;margin:14px auto;border-radius:12px}.qr.show{display:block}.tiny{font-size:.82rem;opacity:.8}.music{position:fixed;top:12px;right:12px;z-index:5;border:1px solid #f4bfd5;background:#fff8fc;color:#9c4b72;border-radius:30px;padding:8px 12px;cursor:pointer}@keyframes bob{50%{transform:translateY(-8px)}}.floaty{position:fixed;bottom:-35px;pointer-events:none;animation:rise linear forwards;z-index:0}@keyframes rise{to{transform:translateY(-115vh) rotate(30deg);opacity:0}}@media(max-width:430px){.balloons{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.ready-actions{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;min-height:64px;position:relative;margin:18px auto;max-width:380px}
+#readyNo{transition:left .18s ease,top .18s ease,transform .18s ease}
+#readyNo.running{position:fixed;z-index:20;margin:0}
+#readyTitle.sad{color:#9d7890}
+</style></head>
+<body>
+<button class="music" id="music">♫ Music: Off</button><div id="floaties"></div>
+<main class="app">
+
+<section class="screen active" id="readyScreen"><div class="card"><div class="emoji" id="readyEmoji">🥹💗</div><div class="eyebrow">one tiny question first</div><h1 id="readyTitle">Are you ready, Cutiee?</h1><p id="readyText">I made a little birthday surprise just for you. Ready to open it? 🎀</p><div class="ready-actions" id="readyActions"><button class="btn" id="readyYes">Yes! 💖</button><button class="btn secondary" id="readyNo">No 🙈</button></div><p class="tiny" id="readyHint">Choose carefully hehe 💕</p></div></section>
+<section class="screen" id="s1"><div class="card"><div class="emoji">🔐💗</div><div class="eyebrow">a tiny secret for you</div><h1>A little surprise awaits...</h1><p>Enter the secret code to unlock your birthday gift.</p><div class="dots" id="dots"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div><div class="keypad"><button class="key" data-k="1">1</button><button class="key" data-k="2">2</button><button class="key" data-k="3">3</button><button class="key" data-k="4">4</button><button class="key" data-k="5">5</button><button class="key" data-k="6">6</button><button class="key" data-k="7">7</button><button class="key" data-k="8">8</button><button class="key" data-k="9">9</button><button class="key" data-k="clear">⌫</button><button class="key" data-k="0">0</button><button class="key" data-k="go">♡</button></div><div class="error" id="error"></div><button class="btn" id="unlock">Unlock my surprise ✨</button><p class="tiny">Hint: it's a special four-digit number 💕</p></div></section>
+<section class="screen" id="s2"><div class="card"><div class="emoji">🎂🧸🎈</div><div class="eyebrow">today is all about you</div><h1>Happy Birthday, <span class="name">Cutiee</span>! 💗</h1><p>Wishing you a day full of smiles, sweet surprises, warm hugs, and all the little things that make you happy.</p><button class="btn" data-next="s3">Open your surprise 💌</button></div></section>
+<section class="screen" id="s3"><div class="card"><div class="eyebrow">tap each balloon</div><h2>A few little reminders 💞</h2><p>Pop all four balloons to reveal your messages!</p><div class="balloons"><button class="balloon" data-msg="You make ordinary days brighter ✨"><span>🎈</span><span class="msg">Tap me!</span></button><button class="balloon" data-msg="You deserve so many happy moments 🌸"><span>🎈</span><span class="msg">Tap me!</span></button><button class="balloon" data-msg="Never forget how special you are 💗"><span>🎈</span><span class="msg">Tap me!</span></button><button class="balloon" data-msg="May your wishes come true 🎂"><span>🎈</span><span class="msg">Tap me!</span></button></div><p id="progress">0 of 4 balloons popped</p><button class="btn" id="balloonNext" disabled>Continue ✨</button><br><button class="btn secondary" data-back>Back</button></div></section>
+<section class="screen" id="s4"><div class="card"><div class="emoji">🎂</div><h2>Make a birthday wish! <span id="candle">🕯️</span></h2><p>Close your eyes, make a wish, and get ready for a wonderful year ahead.</p><button class="btn" id="wish">My wish is made ✨</button><p id="wishMsg"></p><button class="btn" data-next="s5">Continue 🌷</button><br><button class="btn secondary" data-back>Back</button></div></section>
+<section class="screen" id="s5"><div class="card"><div class="flowers">💐🌹🌷</div><h2>A little bouquet for you</h2><p>Sending you a garden of happiness, kindness, laughter, and lovely memories. You deserve the sweetest things in life. 🌸</p><button class="btn" data-next="s6">There's a letter for you 💌</button><br><button class="btn secondary" data-back>Back</button></div></section>
+<section class="screen" id="s6"><div class="card"><div class="eyebrow">written just for you</div><h2>A little letter 💌</h2><p>Tap the envelope to open your letter.</p><button class="envelope" id="envelope">💌</button><article class="letter" id="letter"><strong>Dear Cutiee,</strong>
+
+Happy Birthday to best sister in the world!🎂
+
+Aap duniya ki best sister ho, i am so grateful to have you in my life.
+You bring so much happiness and sweetness into my life. Every moment with you is special to me.
+Aapne ne mera bhot sath diya samjaya or bhot kuch you are like an angle to me. when every i needed you aap free hoya nhi aapne hamesha meri baat suni hai or muje guide kiya tha thanks my dear sister
+
+Aaj aapka din hai bhagwan kare aapki sari wish puri ho or aapko duniya ki saari kushiya mile or jaldi se aapki shadi ho or muje ek pyari si bhanji mile ❤️😘
+My cutiee happy birthday to you
+
+With love and best wishes,
+Aapka pagal bhai Deepu💝</article><button class="btn" data-next="s7">One last surprise 🎁</button><br><button class="btn secondary" data-back>Back</button></div></section>
+<section class="screen" id="s7"><div class="card"><div class="eyebrow">the final little surprise</div><h2>Open your gift! 🎀</h2><button class="gift" id="gift">🎁</button><p id="giftMsg">Tap the gift box to see what's inside.</p><img class="qr" id="qr" alt="Birthday surprise QR code"><p class="tiny" id="qrHint">You can add your own QR image in the code settings.</p><button class="btn" data-next="s8">Finish the surprise 💗</button><br><button class="btn secondary" data-back>Back</button></div></section>
+<section class="screen" id="s8"><div class="card"><div class="emoji">🎉💗🎂</div><div class="eyebrow">a day as lovely as you</div><h1>Happy Birthday, <span class="name">Cutiee</span>!</h1><p>May your year be full of happiness, new adventures, laughter, and beautiful memories. You are loved more than you know. 🌷</p><button class="btn" id="replay">Replay from the beginning ↻</button></div></section>
+</main>
+<script>
+/* PERSONALIZE THESE SETTINGS */
+const RECIPIENT_NAME = "Cutiee";
+const PASSCODE = "1993"; // Change to your four-digit code
+const QR_IMAGE = ""; // Example: "my-qr.png" saved beside index.html
+document.querySelectorAll(".name").forEach(e=>e.textContent=RECIPIENT_NAME);
+let code="";
+const dots=[...document.querySelectorAll(".dot")];
+function updateDots(){dots.forEach((d,i)=>d.classList.toggle("on",i<code.length))}
+function screen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,behavior:"smooth"})}
+function unlock(){if(code===PASSCODE){document.getElementById("error").textContent="";screen("s2");confetti()}else{document.getElementById("error").textContent="Oops! Try that code again 💗";code="";updateDots()}}
+document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{let k=b.dataset.k;if(k==="clear")code=code.slice(0,-1);else if(k==="go"){unlock();return}else if(code.length<4)code+=k;updateDots();if(code.length===4)setTimeout(unlock,180)});
+document.getElementById("unlock").onclick=unlock;
+document.addEventListener("keydown",e=>{if(!document.getElementById("s1").classList.contains("active"))return;if(/^\d$/.test(e.key)&&code.length<4)code+=e.key;if(e.key==="Backspace")code=code.slice(0,-1);if(e.key==="Enter")unlock();updateDots()});
+document.querySelectorAll("[data-next]").forEach(b=>b.onclick=()=>screen(b.dataset.next));
+document.querySelectorAll("[data-back]").forEach(b=>b.onclick=()=>{let n=Number(document.querySelector(".screen.active").id.slice(1));if(n>2)screen("s"+(n-1))});
+let popped=0;document.querySelectorAll(".balloon").forEach(b=>b.onclick=()=>{if(b.classList.contains("popped"))return;b.classList.add("popped");b.querySelector(".msg").textContent=b.dataset.msg;popped++;document.getElementById("progress").textContent=`${popped} of 4 balloons popped`;if(popped===4)document.getElementById("balloonNext").disabled=false;confetti(10)});
+document.getElementById("balloonNext").onclick=()=>screen("s4");
+document.getElementById("wish").onclick=()=>{document.getElementById("candle").textContent="✨";document.getElementById("wishMsg").textContent="Wish sent to the universe! May something wonderful happen 💖";confetti(24)};
+document.getElementById("envelope").onclick=()=>document.getElementById("letter").classList.add("show");
+document.getElementById("gift").onclick=()=>{document.getElementById("gift").textContent="💝";document.getElementById("giftMsg").textContent="Surprise! Sending you a giant bundle of happiness 💗";confetti(30);if(QR_IMAGE){let q=document.getElementById("qr");q.src=QR_IMAGE;q.classList.add("show");document.getElementById("qrHint").textContent="Scan the QR code for your extra surprise!"}};
+function reset(){code="";updateDots();document.getElementById("error").textContent="";popped=0;document.querySelectorAll(".balloon").forEach(b=>{b.classList.remove("popped");b.querySelector(".msg").textContent="Tap me!"});document.getElementById("progress").textContent="0 of 4 balloons popped";document.getElementById("balloonNext").disabled=true;document.getElementById("candle").textContent="🕯️";document.getElementById("wishMsg").textContent="";document.getElementById("letter").classList.remove("show");document.getElementById("gift").textContent="🎁";document.getElementById("giftMsg").textContent="Tap the gift box to see what's inside.";document.getElementById("qr").classList.remove("show");screen("readyScreen")}
+document.getElementById("replay").onclick=reset;
+function floaty(){let e=document.createElement("span");e.className="floaty";e.textContent=["💗","♡","✨","🌸","💕"][Math.floor(Math.random()*5)];e.style.left=Math.random()*100+"%";e.style.fontSize=14+Math.random()*20+"px";let t=7+Math.random()*8;e.style.animationDuration=t+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),t*1000)}for(let i=0;i<12;i++)setTimeout(floaty,i*300);setInterval(floaty,900);
+function confetti(n=28){let a=["💗","✨","🎉","🌸","💕"];for(let i=0;i<n;i++){let e=document.createElement("span");e.textContent=a[Math.floor(Math.random()*a.length)];Object.assign(e.style,{position:"fixed",zIndex:10,left:Math.random()*100+"vw",top:"-30px",fontSize:14+Math.random()*18+"px",pointerEvents:"none",transition:"transform 2.4s linear,opacity 2.4s linear"});document.body.appendChild(e);requestAnimationFrame(()=>{e.style.transform=`translateY(${innerHeight+80}px) rotate(${Math.random()*600}deg)`;e.style.opacity=0});setTimeout(()=>e.remove(),2500)}}
+let audio;document.getElementById("music").onclick=()=>{let b=document.getElementById("music");if(!audio){audio=new Audio("birthday-music.mp3");audio.loop=true}if(audio.paused){audio.play().then(()=>b.textContent="♫ Music: On").catch(()=>b.textContent="Add birthday-music.mp3")}else{audio.pause();b.textContent="♫ Music: Off"}};
+
+// Playful ready screen: the birthday experience begins when Yes is clicked.
+const readyNo = document.getElementById("readyNo");
+const readyYes = document.getElementById("readyYes");
+const readyTitle = document.getElementById("readyTitle");
+const readyText = document.getElementById("readyText");
+const readyEmoji = document.getElementById("readyEmoji");
+const readyHint = document.getElementById("readyHint");
+let noClicks = 0;
+
+function moveNoButton() {
+  noClicks++;
+  readyTitle.textContent = "Awww, you're not ready? 🥺";
+  readyTitle.classList.add("sad");
+  readyText.textContent = "It's okay... but I made this just for you 💗";
+  readyEmoji.textContent = "🥹💔";
+  readyHint.textContent = "Let's try this again 💞";
+  readyNo.textContent = "No 🙈";
+  readyNo.classList.add("running");
+
+  const margin = 16;
+  const maxX = Math.max(margin, window.innerWidth - readyNo.offsetWidth - margin);
+  const maxY = Math.max(margin, window.innerHeight - readyNo.offsetHeight - margin);
+  readyNo.style.left = (margin + Math.random() * (maxX - margin)) + "px";
+  readyNo.style.top = (margin + Math.random() * (maxY - margin)) + "px";
+  readyNo.style.transform = `rotate(${Math.random() * 24 - 12}deg)`;
+}
+readyNo.addEventListener("click", moveNoButton);
+readyNo.addEventListener("pointerenter", () => {
+  if (noClicks > 0 && window.matchMedia("(pointer:fine)").matches) moveNoButton();
+});
+readyYes.addEventListener("click", () => {
+  readyNo.classList.remove("running");
+  readyNo.style.left = "";
+  readyNo.style.top = "";
+  readyNo.style.transform = "";
+  readyTitle.classList.remove("sad");
+  screen("s1");
+});
+
+</script></body></html>
